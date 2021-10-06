@@ -60,6 +60,7 @@
         <button onclick="createLink()">create Link</button>
         <button onclick="serializeGraph()">Serialize Graph</button>
         <button id= "save">Save</button>
+        <button onclick= "createGraphFromJson()">Create Graph</button>
         <div id="paper-html-elements"></div>
         <script src="./form.js"></script>
 </body>

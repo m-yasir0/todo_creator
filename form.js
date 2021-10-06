@@ -1,4 +1,4 @@
-var graph, paper, elements = [], joints = [];
+var graph, paper;
 (function () {
   graph = new joint.dia.Graph();
   new joint.dia.Paper({
@@ -214,8 +214,8 @@ function createElem(image, label, span, x, y, id) {
     image_src: image
   });
   graph.addCells([el1]);
-  elements.push(el1);
   console.log(el1)
+  return el1;
 }
 
 // Serialize Graph
@@ -225,17 +225,21 @@ function serializeGraph() {
 }
 
 // Create link Elem
-function createLink() {
-  var link1 = new joint.shapes.standard.Link();
-  link1.connector('smooth');
-  link1.attr({
+function createLink(source, target, id) {
+  var link = new joint.shapes.standard.Link();
+  link.connector('smooth');
+  link.attr({
     line: {
       strokeWidth: 3,
       stroke: '#222222'
     }
   });
-  link1.addTo(graph);
-  addTools(paper, link1);
+  link.source(source);
+  link.target(target);
+  link.addTo(graph);
+  addTools(paper, link);
+  console.log(link)
+  return link;
 }
 
 // Add tools
@@ -278,4 +282,52 @@ function bindInteractionEvents(adjustVertices, graph, paper) {
 
   // adjust vertices when the user stops interacting with an element
   paper.on('cell:pointerup', adjustGraphVertices);
+}
+
+// create graph from JSON
+function createGraphFromJson() {
+  let json_graph = { "cells": [{ "type": "html.Element", "position": { "x": 349, "y": 228 }, "size": { "width": 100, "height": 50 }, "angle": 0, "id": "423a13d8-c431-4b20-95eb-58e5374232dd", "label": "label", "select": "box", "image_src": "<div><img src ='./icon.png'/></div>", "z": 1, "attrs": {} }, { "type": "html.Element", "position": { "x": 303, "y": 44 }, "size": { "width": 100, "height": 50 }, "angle": 0, "id": "846e7b27-8ebb-4a59-944a-74985301d86b", "label": "label", "select": "box", "image_src": "<div><img src ='./icon.png'/></div>", "z": 2, "attrs": {} }, { "type": "html.Element", "position": { "x": 97, "y": 154 }, "size": { "width": 100, "height": 50 }, "angle": 0, "id": "044e9e4b-a1d4-40f4-9db5-f444e9f2845d", "label": "label", "select": "box", "image_src": "<div><img src ='./icon.png'/></div>", "z": 3, "attrs": {} }, { "type": "standard.Link", "source": { "id": "044e9e4b-a1d4-40f4-9db5-f444e9f2845d" }, "target": { "id": "846e7b27-8ebb-4a59-944a-74985301d86b" }, "id": "e9acc243-d484-4428-9875-91a408818d81", "connector": { "name": "smooth" }, "z": 4, "vertices": [{ "x": 250, "y": 124 }], "attrs": { "line": { "stroke": "#222222", "strokeWidth": 3 } } }, { "type": "standard.Link", "source": { "id": "846e7b27-8ebb-4a59-944a-74985301d86b" }, "target": { "id": "423a13d8-c431-4b20-95eb-58e5374232dd" }, "id": "b68e78b7-90cf-40e1-a98f-b00b887c249a", "connector": { "name": "smooth" }, "z": 5, "vertices": [{ "x": 376, "y": 161 }], "attrs": { "line": { "stroke": "#222222", "strokeWidth": 3 } } }, { "type": "standard.Link", "source": { "id": "423a13d8-c431-4b20-95eb-58e5374232dd" }, "target": { "id": "044e9e4b-a1d4-40f4-9db5-f444e9f2845d" }, "id": "d7dce7c4-032f-4048-ba2e-784ddaa9fe2a", "connector": { "name": "smooth" }, "z": 6, "vertices": [{ "x": 273, "y": 216 }], "attrs": { "line": { "stroke": "#222222", "strokeWidth": 3 } } }] }
+  let html_element = [], standard_links = [];
+  let seperated = seperate(json_graph);
+  //console.log(seperated)
+  for (let elem of seperated.elements) {
+    html_element.push(
+      createElem(
+        elem.image_src,
+        elem.label,
+        elem.select,
+        elem.position.x,
+        elem.position.y,
+        elem.id
+      )
+    )
+  };
+  for (let i = 0; i < seperated.links.length; i++) {
+    let target, source;
+    for (let j = 0; j < html_element.length; j++) {
+      console.log(html_element[j]);
+      if (html_element[j].id == seperated.links[i].source.id)
+        source = html_element[j];
+      if (html_element[j].id == seperated.links[i].target.id)
+        target = html_element[j];
+    }
+    standard_links.push(
+      createLink(source, target, seperated.links[i].id)
+    )
+  }
+}
+
+// Seperate html elements and links
+function seperate(json_graph) {
+  let elems = [], links = [];
+  for (let obj of json_graph.cells) {
+    if (obj.type == 'html.Element')
+      elems.push(obj);
+    else if (obj.type == 'standard.Link')
+      links.push(obj);
+  }
+  return {
+    elements: elems,
+    links: links
+  }
 }
