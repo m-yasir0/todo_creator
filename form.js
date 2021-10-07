@@ -31,6 +31,7 @@ var graph, paper;
   joint.shapes.html.ElementView = joint.dia.ElementView.extend({
     template: [
       '<div class="html-element">',
+      '<button class="delete">x</button>',
       "<span hidden class='hidden'></span>",
       "<div class='image'></div>",
       "<label></label>",
@@ -238,7 +239,6 @@ function createLink(source, target, id) {
   link.target(target);
   link.addTo(graph);
   addTools(paper, link);
-  console.log(link)
   return link;
 }
 
@@ -247,8 +247,9 @@ function addTools(paper, link) {
 
   var toolsView = new joint.dia.ToolsView({
     tools: [
+      new joint.linkTools.Remove(),
       new joint.linkTools.SourceArrowhead(),
-      new joint.linkTools.TargetArrowhead()
+      new joint.linkTools.TargetArrowhead(),
     ]
   });
   link.findView(paper).addTools(toolsView);

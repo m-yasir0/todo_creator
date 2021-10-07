@@ -1,3 +1,4 @@
+
 #paper-html-elements {
   position: absolute;
   border: 1px solid gray;
@@ -11,6 +12,7 @@
 #paper-html-elements svg .link {
   z-index: 2;
 }
+
 .html-element {
   position: absolute;
   background: #92adbe;
