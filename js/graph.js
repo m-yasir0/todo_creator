@@ -1,7 +1,7 @@
 var graph, paper;
 (function () {
   graph = new joint.dia.Graph();
-  new joint.dia.Paper({
+  paper = new joint.dia.Paper({
     el: $("#paper-html-elements"),
     width: 650,
     height: 400,
@@ -32,11 +32,14 @@ var graph, paper;
     template: [
       '<div class="html-element">',
       '<button class="delete">x</button>',
-      "<span hidden class='hidden'></span>",
+      "<span hidden class='hidden notes' aria-lable='notes'></span>",
+      "<span hidden class='hidden id' aria-lable='id'></span>",
+      "<span hidden class='hidden description' aria-lable='description'></span>",
+      "<span hidden class='hidden url' aria-lable='url'></span>",
+      "<span hidden class='hidden last_changed' aria-lable='last_changed'></span>",
+      "<span class= 'status' aria-lable='status'></span>",
       "<div class='image'></div>",
       "<label></label>",
-      "<span></span>",
-      "<div></div>",
       "<br/>",
       "</div>",
     ].join(""),
@@ -47,7 +50,6 @@ var graph, paper;
 
       this.$box = $(_.template(this.template)());
 
-      this.$box.find("select").val(this.model.get("select"));
       this.$box
         .find(".delete")
         .on("click", _.bind(this.model.remove, this.model));
@@ -69,9 +71,13 @@ var graph, paper;
       var bbox = this.model.getBBox();
       // Example of updating the HTML with a data stored in the cell model.
       this.$box.find("label").text(this.model.get("label"));
-      this.$box.find("span").text(this.model.get("select"));
+      this.$box.find(".status").text(this.model.get("status"));
+      this.$box.find(".notes").text(this.model.get("notes"));
       this.$box.find(".image").html(this.model.get("image_src"));
-      this.$box.find(".hidden").html(this.model.get("id"));
+      this.$box.find(".url").html(this.model.get("url"));
+      this.$box.find(".description").html(this.model.get("description"));
+      this.$box.find(".id").html(this.model.get("id"));
+      this.$box.find(".last_changed").html(this.model.get("last_changed"));
       this.$box.css({
         width: bbox.width,
         height: bbox.height,
@@ -183,19 +189,6 @@ var graph, paper;
     }
   }
 
-  // create paper
-  paper = new joint.dia.Paper({
-    el: document.getElementById('paper-html-elements'),
-    model: graph,
-    width: 600,
-    height: 400,
-    gridSize: 1,
-    // disable built-in link dragging
-    interactive: {
-      linkMove: false
-    }
-  });
-
   // enable interactions
   bindInteractionEvents(adjustVertices, graph, paper);
 
@@ -205,14 +198,18 @@ var graph, paper;
 }());
 
 // Create Elements
-function createElem(image, label, span, x, y, id) {
+function createElem(image, label, status = 'up', x, y, id) {
   var el1 = new joint.shapes.html.Element({
     id: id,
     position: { x: x, y: y },
-    size: { width: 100, height: 50 },
+    size: { width: 100, height: 65 },
     label: label,
-    select: span,
-    image_src: image
+    status: status,
+    image_src: image,
+    description: '',
+    url: '',
+    notes: '',
+    last_changed: new Date().toUTCString()
   });
   graph.addCells([el1]);
   console.log(el1)
