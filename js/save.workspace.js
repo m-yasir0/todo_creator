@@ -1,5 +1,4 @@
 $(function () {
-
     $('#save').click(function () {
         //alert('Hello');
         url = './save.workspace.php';

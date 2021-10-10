@@ -39,6 +39,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style/style-user.css">
+    <link rel="stylesheet" href="./assets/bootstrap.style/styles.css">
+    <script src="./assets/fontawesome/font-awesome.js"></script>
     <title>User Management</title>
 </head>
 
@@ -50,15 +52,26 @@
     <form action="<?php $_SERVER['PHP_SELF']?>" method = "POST">
         <div class="center-user">
             <div class="message" id= "message"></div>
-            <div class="op-buttons">
-                <button>Create New User</button>
-                <button>Show Users</button>
-                <button>Manage Permissions</button>
+
+            <style>
+                .btn-group{
+                    width: 100%;
+                }
+            </style>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-success active">
+                    <input type="radio" name="options" id="option1" autocomplete="off"
+                        checked> Register User
+                </label>
+                <label class="btn btn-success">
+                    <input type="radio" name="options" id="option2" autocomplete="off">
+                    View Users
+                </label>
             </div>
 
             <br>
 
-            <div>
+            <div id="create_user">
                 <div>
                     <label class="email-lab"><b>Name</b></label>
                     <input type="text" name="name" class="fields">
@@ -79,7 +92,33 @@
 
                 <button class="login-button"><b>Create User</b></button>
             </div>
-
+            
+            <div id= "user_table" style="display: none">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table mr-1"></i>
+                            Users
+                    </div>
+                    <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>User Email</th>
+                                    <th>Name</th>
+                                    <th>User Type</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    require_once('./allUsers.php');
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>   
+                </div> 
+            </div>
         </div>
     </form>
 
@@ -100,5 +139,14 @@
         }
     ?>
 </body>
-
+<script src="./assets/Jquery.js"></script>
+<script src="./assets/bootstrap.js/bootstrap.bundle.min.js"></script>
+<script src="./assets/datatables/jquery.dataTables.min.js"></script>
+<script src="./assets/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#dataTable').DataTable();
+    });
+</script>
+<script src="./js/user-management.js"></script>
 </html>
