@@ -3,7 +3,7 @@ var graph, paper;
   graph = new joint.dia.Graph();
   paper = new joint.dia.Paper({
     el: $("#paper-html-elements"),
-    width: 650,
+    width: 1000,
     height: 400,
     gridSize: 1,
     model: graph,
@@ -202,7 +202,7 @@ function createElem(image, label, status = 'up', x, y, id) {
   var el1 = new joint.shapes.html.Element({
     id: id,
     position: { x: x, y: y },
-    size: { width: 100, height: 65 },
+    size: { width: 130, height: 75 },
     label: label,
     status: status,
     image_src: image,
@@ -214,12 +214,6 @@ function createElem(image, label, status = 'up', x, y, id) {
   graph.addCells([el1]);
   console.log(el1)
   return el1;
-}
-
-// Serialize Graph
-function serializeGraph() {
-  console.log(graph.toJSON())
-  alert(graph.toJSON())
 }
 
 // Create link Elem
@@ -283,8 +277,8 @@ function bindInteractionEvents(adjustVertices, graph, paper) {
 }
 
 // create graph from JSON
-function createGraphFromJson() {
-  let json_graph = { "cells": [{ "type": "html.Element", "position": { "x": 349, "y": 228 }, "size": { "width": 100, "height": 50 }, "angle": 0, "id": "423a13d8-c431-4b20-95eb-58e5374232dd", "label": "label", "select": "box", "image_src": "<div><img src ='./icon.png'/></div>", "z": 1, "attrs": {} }, { "type": "html.Element", "position": { "x": 303, "y": 44 }, "size": { "width": 100, "height": 50 }, "angle": 0, "id": "846e7b27-8ebb-4a59-944a-74985301d86b", "label": "label", "select": "box", "image_src": "<div><img src ='./icon.png'/></div>", "z": 2, "attrs": {} }, { "type": "html.Element", "position": { "x": 97, "y": 154 }, "size": { "width": 100, "height": 50 }, "angle": 0, "id": "044e9e4b-a1d4-40f4-9db5-f444e9f2845d", "label": "label", "select": "box", "image_src": "<div><img src ='./icon.png'/></div>", "z": 3, "attrs": {} }, { "type": "standard.Link", "source": { "id": "044e9e4b-a1d4-40f4-9db5-f444e9f2845d" }, "target": { "id": "846e7b27-8ebb-4a59-944a-74985301d86b" }, "id": "e9acc243-d484-4428-9875-91a408818d81", "connector": { "name": "smooth" }, "z": 4, "vertices": [{ "x": 250, "y": 124 }], "attrs": { "line": { "stroke": "#222222", "strokeWidth": 3 } } }, { "type": "standard.Link", "source": { "id": "846e7b27-8ebb-4a59-944a-74985301d86b" }, "target": { "id": "423a13d8-c431-4b20-95eb-58e5374232dd" }, "id": "b68e78b7-90cf-40e1-a98f-b00b887c249a", "connector": { "name": "smooth" }, "z": 5, "vertices": [{ "x": 376, "y": 161 }], "attrs": { "line": { "stroke": "#222222", "strokeWidth": 3 } } }, { "type": "standard.Link", "source": { "id": "423a13d8-c431-4b20-95eb-58e5374232dd" }, "target": { "id": "044e9e4b-a1d4-40f4-9db5-f444e9f2845d" }, "id": "d7dce7c4-032f-4048-ba2e-784ddaa9fe2a", "connector": { "name": "smooth" }, "z": 6, "vertices": [{ "x": 273, "y": 216 }], "attrs": { "line": { "stroke": "#222222", "strokeWidth": 3 } } }] }
+function createGraphFromJson(graph) {
+  let json_graph = graph;
   let html_element = [], standard_links = [];
   let seperated = seperate(json_graph);
   //console.log(seperated)
