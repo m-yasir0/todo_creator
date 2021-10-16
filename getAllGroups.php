@@ -13,10 +13,9 @@
                }
                echo $data;
            }else{
-               echo '';
+               echo '<div class="alert alert-warning"><strong>No saved group!</strong> Start by creating a new Group.</div>';
            }
     }else{
-        header('Location:'.'./login.php?error=User%20not%20logged-in');
         die();
     }
 

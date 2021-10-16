@@ -212,7 +212,6 @@ function createElem(image, label, status = 'up', x, y, id) {
     last_changed: new Date().toUTCString()
   });
   graph.addCells([el1]);
-  console.log(el1)
   return el1;
 }
 
@@ -281,7 +280,6 @@ function createGraphFromJson(graph) {
   let json_graph = graph;
   let html_element = [], standard_links = [];
   let seperated = seperate(json_graph);
-  //console.log(seperated)
   for (let elem of seperated.elements) {
     html_element.push(
       createElem(
@@ -297,7 +295,6 @@ function createGraphFromJson(graph) {
   for (let i = 0; i < seperated.links.length; i++) {
     let target, source;
     for (let j = 0; j < html_element.length; j++) {
-      console.log(html_element[j]);
       if (html_element[j].id == seperated.links[i].source.id)
         source = html_element[j];
       if (html_element[j].id == seperated.links[i].target.id)
@@ -322,4 +319,22 @@ function seperate(json_graph) {
     elements: elems,
     links: links
   }
+}
+// let e = createElem(null, 'lll');
+// console.log(e);
+// e.model.attr('label', 'changed');
+// e..updateBox();
+// e.label = 'dada'
+// e.attributes.label = 'dada'
+// graph.addCells([e]);
+// console.log(e.label)
+
+function chng(l) {
+  e.attributes.label = l;
+  e.attributes.notes = 'Hello worls fnjsfjsdbvjhsbdcj';
+  e.attr('label', l);
+  // e.u
+  // e.label = l;
+  // graph.addCells([e]);
+  console.log(e)
 }

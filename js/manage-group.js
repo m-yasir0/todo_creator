@@ -18,6 +18,7 @@ var openGroup = function (group) {
                     $(li).addClass('active');
                     let req_graph = data.body.graph;
                     createGraphFromJson(req_graph);
+                    $('#create-elem, #update-group, #delete-group').removeAttr('disabled');
                 } else {
                     alert('Cannot Open requested graph');
                 }

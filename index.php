@@ -20,13 +20,13 @@
     <script src="./assets/loadash.js"></script>
     <script src="./assets/backbone.js"></script>
     <script src="./assets/joint.js"></script>
-    <script src="./js/save.workspace.js"></script>
+    <script src="./js/update.workspace.js"></script>
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="./assets/bootstrap.style/styles.css">
     <link rel="stylesheet" href="style/style-edit.css">
 </head>
 
-<body>
+<body style="overflow:hidden">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-flex flex-row-reverse">
         <a class="btn btn-success ml-2" href="./logout.php">Log Out</a>
         <?php
@@ -34,7 +34,7 @@
                 echo '<a class="btn btn-success" href="./user-management.php">Manage Users</a>';
             }
         ?>
-        <button class="btn btn-success" style="position: fixed; left: 40px">Create New Group</button>
+        <button id= "create-group" class="btn btn-success" style="position: fixed; left: 40px">Create New Group</button>
     </nav>
     
     <div class="row">
@@ -44,90 +44,21 @@
             </ul>
         </div>
         <div class="main col-9">
-            <!-- <div class="grouping">
-                <ul id="myUL">
-                    <li><span class="caret">Beverages</span>
-                        <ul class="nested">
-                            <li>Water</li>
-                            <li>Coffee</li>
-                            <li><span class="caret">Tea</span>
-                                <ul class="nested">
-                                    <li>Black Tea</li>
-                                    <li>White Tea</li>
-                                    <li><span class="caret">Green Tea</span>
-                                        <ul class="nested">
-                                            <li>Sencha</li>
-                                            <li>Gyokuro</li>
-                                            <li>Matcha</li>
-                                            <li>Pi Lo Chun</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-
-            </div> -->
-
-            <!-- Create menu dropdown
-            Select Different Elem -->
-
-            <!-- <div class="dropdown">
-                <button class="dropbtn">Create<i class="arrow down"></i></button>
-                <div class="dropdown-content">
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'Generator', 'up')">Generator</a>
-                    <hr>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'Encoder', 'up')">Encoder</a>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'Decoder', 'up')">Decoder</a>
-                    <hr>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'Switch', 'up')">Switch</a>
-                    <hr>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'UDP/RTP source', 'up')">UDP/RTP
-                        source</a>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'UDP/RTP sink', 'up')">UDP/RTP sink</a>
-                    <hr>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'push source', 'up')">Push Source</a>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'push sink', 'up')">Push Sink</a>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'pull source', 'up')">Pull Source</a>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'pull source multi', 'up')">Pull Source
-                        multi</a>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'pull sink', 'up')">Pull Sink</a>
-                    <hr>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'RIST source', 'up')">RIST source</a>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'RIST sink', 'up')">RIST sink</a>
-                    <hr>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'SRT source', 'up')">SRT source</a>
-
-                    <a onclick="createElem(`<div><img src ='./icon.png'/></div>`,'SRT sink', 'up')">SRT sink</a>
-                </div>
-            </div> -->
-            <button type="button" class="btn btn-success m-2" onclick="createElem(`<div><img src ='./icon.png'/></div>`,'Label', 'up')">Create Element</button>
+            <button id = "create-elem" type="button" disabled = 'true' class="btn btn-success m-2" onclick="createElem(`<div><img src ='./icon.png'/></div>`,'Label', 'up')">Create Element</button>
             <!-- <button onclick="createLink()">create Link</button>
             <button onclick="serializeGraph()">Serialize Graph</button>
             <button id="save">Save</button>
             <button onclick="createGraphFromJson()">Create Graph</button>
             <button onclick="document.getElementById('id01').style.display='block'">Open modal</button> -->
+            <!-- <button id="save">Save</button> -->
+            <!-- <button onclick='chng("new")'>change</button> -->
 
             <!-- Graph div
             Paper html element -->
 
             <div id="paper-html-elements"></div>
-            <button id="save" class="btn btn-success" style="position: fixed; bottom:50px; right: 50px">Save/Update Group</button>
+            <button id="update-group" disabled = 'true' class="btn btn-success" style="position: fixed; bottom:10px; right: 10px">Update Group</button>
+            <button id="delete-group" disabled = 'true' class="btn btn-danger">Delete Group</button>
             <!-- Edit popup
             element edit page popup -->
 
