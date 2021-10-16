@@ -186,4 +186,58 @@ ul,
   width: 20px;
   height: 20px;
   line-height: 20px;
-  }
+}
+
+.html-element button.box-up {
+  outline: none;
+  border: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  transform: translate(-50%,0);
+  background-color: red;
+  display: none;
+}
+.box-down {
+  outline: none;
+  border: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  text-align: middle;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: red;
+  display: none;
+}
+.box-right {
+  outline: none;
+  border: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translate(0,-50%);
+  background-color: red;
+  display: none;
+}
+.box-left {
+  outline: none;
+  border: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translate(0,-50%);
+  background-color: red;
+  display: none;
+}

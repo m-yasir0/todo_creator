@@ -21,7 +21,6 @@ $(function () {
     });
 
     $('#delete-group').click(function () {
-        //alert('Hello');
         group = $('#list-groups').children('.active').text();
         url = './update.workspace.php';
         let con = confirm('Are you sure you want to delete group: ' + group);
@@ -71,6 +70,7 @@ $(function () {
                             }
                             $('#list-groups').children('.active').removeClass('active');
                             $('#list-groups').append('<li class="list-group-item active"><button class="btn btn-block"  onclick= "openGroup(this)">' + group + '</button></li>');
+                            $('#create-elem, #update-group, #delete-group').removeAttr('disabled');
                             alert(data);
                         }
                     }

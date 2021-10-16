@@ -45,13 +45,6 @@
         </div>
         <div class="main col-9">
             <button id = "create-elem" type="button" disabled = 'true' class="btn btn-success m-2" onclick="createElem(`<div><img src ='./icon.png'/></div>`,'Label', 'up')">Create Element</button>
-            <!-- <button onclick="createLink()">create Link</button>
-            <button onclick="serializeGraph()">Serialize Graph</button>
-            <button id="save">Save</button>
-            <button onclick="createGraphFromJson()">Create Graph</button>
-            <button onclick="document.getElementById('id01').style.display='block'">Open modal</button> -->
-            <!-- <button id="save">Save</button> -->
-            <!-- <button onclick='chng("new")'>change</button> -->
 
             <!-- Graph div
             Paper html element -->
@@ -64,7 +57,7 @@
 
             <div id="id01" class="modal">
 
-                <form class="modal-content animate" action="/action_page.php" method="post">
+                <form name="edit-element" class="modal-content animate">
                     <div class="imgcontainer">
                         <span onclick="document.getElementById('id01').style.display='none'" class="close"
                             title="Close Modal">&times;</span>
@@ -72,21 +65,21 @@
 
                     <div class="container">
                         <label class="email-lab"><b>Name</b></label>
-                        <input type="text" name="name" class="fields">
+                        <input type="text" name="name" class="fields" required>
 
                         <span><b>Status</b></span>
                         <br>
                         <label class="pass-lab">Down</label>
-                        <input type="radio" name="down" value="down">
+                        <input type="radio" name="status" value="down">
 
                         <label class="pass-lab" style="margin-left: 20px;">Up</label>
-                        <input type="radio" name="down" value="up" checked>
+                        <input type="radio" name="status" value="up" checked>
 
                         <br>
                         <br>
 
                         <label class="email-lab"><b>Last Changed</b></label>
-                        <div class="">dd-mm-yyyy,hh:mm</div>
+                        <div class="" id="last-changed">dd-mm-yyyy,hh:mm</div>
 
                         <br>
 
@@ -101,7 +94,7 @@
                         <label class="email-lab"><b>Notes</b></label>
                         <textarea class="fields" name="notes"></textarea>
 
-                        <button type="submit">Submit</button>
+                        <button type="submit" id="save-edited-element">Save</button>
                     </div>
 
                     <div class="container" style="background-color:#f1f1f1">
@@ -114,6 +107,7 @@
 
     <script src="./js/graph.js"></script>
     <script src="./js/manage-group.js"></script>
+    <script src="./js/popup.js"></script>
 </body>
 
 </html>

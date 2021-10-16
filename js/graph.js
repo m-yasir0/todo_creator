@@ -4,7 +4,7 @@ var graph, paper;
   paper = new joint.dia.Paper({
     el: $("#paper-html-elements"),
     width: 1000,
-    height: 400,
+    height: 450,
     gridSize: 1,
     model: graph,
   });
@@ -31,9 +31,13 @@ var graph, paper;
   joint.shapes.html.ElementView = joint.dia.ElementView.extend({
     template: [
       '<div class="html-element">',
+      '<button class="box-up"  onclick="attachBoxToLink(this)"></button>',
+      '<button class="box-down" onclick="attachBoxToLink(this)"></button>',
+      '<button class="box-right" onclick="attachBoxToLink(this)"></button>',
+      '<button class="box-left" onclick="attachBoxToLink(this)"></button>',
       '<button class="delete">x</button>',
       "<span hidden class='hidden notes' aria-lable='notes'></span>",
-      "<span hidden class='hidden id' aria-lable='id'></span>",
+      "<span hidden id='' class='hidden id' aria-lable='id'></span>",
       "<span hidden class='hidden description' aria-lable='description'></span>",
       "<span hidden class='hidden url' aria-lable='url'></span>",
       "<span hidden class='hidden last_changed' aria-lable='last_changed'></span>",
@@ -77,6 +81,7 @@ var graph, paper;
       this.$box.find(".url").html(this.model.get("url"));
       this.$box.find(".description").html(this.model.get("description"));
       this.$box.find(".id").html(this.model.get("id"));
+      this.$box.find(".id").attr('id', this.model.get("id"));
       this.$box.find(".last_changed").html(this.model.get("last_changed"));
       this.$box.css({
         width: bbox.width,
@@ -198,7 +203,18 @@ var graph, paper;
 }());
 
 // Create Elements
-function createElem(image, label, status = 'up', x, y, id) {
+function createElem(
+  image,
+  label,
+  status = 'up',
+  notes,
+  description,
+  last_changed = new Date().toUTCString(),
+  url,
+  x,
+  y,
+  id
+) {
   var el1 = new joint.shapes.html.Element({
     id: id,
     position: { x: x, y: y },
@@ -206,10 +222,10 @@ function createElem(image, label, status = 'up', x, y, id) {
     label: label,
     status: status,
     image_src: image,
-    description: '',
-    url: '',
-    notes: '',
-    last_changed: new Date().toUTCString()
+    description: description,
+    url: url,
+    notes: notes,
+    last_changed: last_changed
   });
   graph.addCells([el1]);
   return el1;
@@ -257,9 +273,31 @@ function bindToolEvents(paper) {
   paper.on('link:mouseout', function (linkView) {
     linkView.hideTools();
   });
+
+  // click on cell response
+  paper.on('cell:pointerdblclick',
+    function (cellView, evt, x, y) {
+      openModal(cellView);
+    }
+  );
+
+  // hover on cell to view dots
+  paper.on('cell:mouseover',
+    function (cellView) {
+      let id = cellView.model.id;
+      $('#' + id).parent().children('.box-up, .box-down, .box-left, .box-right').css('display', 'block');
+    }
+  );
+
+  // remove dots on blank mouseover
+  paper.on('blank:mouseover', function () {
+    $('.html-element').children('.box-up, .box-down, .box-left, .box-right').css('display', 'none');
+  });
+
   paper.on('blank:mouseover cell:mouseover', function () {
     paper.hideTools();
   });
+
 }
 
 // Bind Interaction Events
@@ -285,7 +323,11 @@ function createGraphFromJson(graph) {
       createElem(
         elem.image_src,
         elem.label,
-        elem.select,
+        elem.status,
+        elem.notes,
+        elem.description,
+        elem.last_changed,
+        elem.url,
         elem.position.x,
         elem.position.y,
         elem.id
@@ -320,21 +362,14 @@ function seperate(json_graph) {
     links: links
   }
 }
-// let e = createElem(null, 'lll');
-// console.log(e);
-// e.model.attr('label', 'changed');
-// e..updateBox();
-// e.label = 'dada'
-// e.attributes.label = 'dada'
-// graph.addCells([e]);
-// console.log(e.label)
 
-function chng(l) {
-  e.attributes.label = l;
-  e.attributes.notes = 'Hello worls fnjsfjsdbvjhsbdcj';
-  e.attr('label', l);
-  // e.u
-  // e.label = l;
-  // graph.addCells([e]);
-  console.log(e)
+function attachBoxToLink(this_circle) {
+  let id = $(this_circle).parent().children('.id').text();
+  let source = graph.getCell(id);
+
+  var e = window.event;
+  var posX = e.clientX;
+  var posY = e.clientY;
+  target = { x: posX, y: posY };
+  createLink(source, target);
 }
