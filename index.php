@@ -34,6 +34,7 @@
                 echo '<a class="btn btn-success" href="./user-management.php">Manage Users</a>';
             }
         ?>
+        <a style= "color:white">Wellcome <?php echo $_SESSION['name'].' !';?></a>
         <button id= "create-group" class="btn btn-success" style="position: fixed; left: 40px">Create New Group</button>
     </nav>
     
@@ -52,6 +53,7 @@
             <div id="paper-html-elements"></div>
             <button id="update-group" disabled = 'true' class="btn btn-success" style="position: fixed; bottom:10px; right: 10px">Update Group</button>
             <button id="delete-group" disabled = 'true' class="btn btn-danger">Delete Group</button>
+            <input id='color-picker' type='color' value='#0099ff' class="btn btn-warning" style= 'padding:0px'><span class='badge badge-warning'>Pick Element Colour</span></input>
             <!-- Edit popup
             element edit page popup -->
 

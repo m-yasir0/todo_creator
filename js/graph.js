@@ -82,6 +82,7 @@ var graph, paper;
       this.$box.find(".description").html(this.model.get("description"));
       this.$box.find(".id").html(this.model.get("id"));
       this.$box.find(".id").attr('id', this.model.get("id"));
+      this.$box.find(".id").parent('.html-element').attr('style', 'background:' + this.model.get("color"));
       this.$box.find(".last_changed").html(this.model.get("last_changed"));
       this.$box.css({
         width: bbox.width,
@@ -213,8 +214,11 @@ function createElem(
   url,
   x,
   y,
-  id
+  id,
+  color
 ) {
+  if (!color)
+    color = $('#color-picker').val();
   var el1 = new joint.shapes.html.Element({
     id: id,
     position: { x: x, y: y },
@@ -225,7 +229,8 @@ function createElem(
     description: description,
     url: url,
     notes: notes,
-    last_changed: last_changed
+    last_changed: last_changed,
+    color: color
   });
   graph.addCells([el1]);
   return el1;
@@ -330,7 +335,8 @@ function createGraphFromJson(graph) {
         elem.url,
         elem.position.x,
         elem.position.y,
-        elem.id
+        elem.id,
+        elem.color
       )
     )
   };
