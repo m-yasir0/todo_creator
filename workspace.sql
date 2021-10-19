@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 14, 2021 at 05:25 PM
+-- Generation Time: Oct 19, 2021 at 09:32 AM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -25,20 +25,25 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `graph`
+-- Table structure for table `groups`
 --
 
-DROP TABLE IF EXISTS `graph`;
-CREATE TABLE IF NOT EXISTS `graph` (
-  `graph` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`graph`))
+DROP TABLE IF EXISTS `groups`;
+CREATE TABLE IF NOT EXISTS `groups` (
+  `group_id` varchar(200) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `graph` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`graph`)),
+  PRIMARY KEY (`group_id`,`email`),
+  KEY `email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `graph`
+-- Dumping data for table `groups`
 --
 
-INSERT INTO `graph` (`graph`) VALUES
-('{\"cells\":[{\"type\":\"html.Element\",\"position\":{\"x\":335,\"y\":179},\"size\":{\"width\":100,\"height\":65},\"angle\":0,\"id\":\"e2063901-c1cf-47b6-ac27-3f527cbfc797\",\"label\":\"Switch\",\"status\":\"up\",\"image_src\":\"<div><img src =\'./icon.png\'/></div>\",\"description\":\"\",\"url\":\"\",\"notes\":\"\",\"last_changed\":\"Sun, 10 Oct 2021 13:19:40 GMT\",\"z\":1,\"attrs\":{}},{\"type\":\"standard.Link\",\"source\":{\"id\":\"d5284d0d-abb3-496d-a446-a15e1a8485ce\"},\"target\":{\"id\":\"e2063901-c1cf-47b6-ac27-3f527cbfc797\"},\"id\":\"8db829a7-ed8a-48b3-a601-892b2b13b2f4\",\"connector\":{\"name\":\"smooth\"},\"z\":2,\"vertices\":[{\"x\":286,\"y\":158}],\"attrs\":{\"line\":{\"stroke\":\"#222222\",\"strokeWidth\":3}}},{\"type\":\"html.Element\",\"position\":{\"x\":103,\"y\":215},\"size\":{\"width\":100,\"height\":65},\"angle\":0,\"id\":\"1aa7a790-6a40-40b2-bb34-58072fece123\",\"label\":\"UDP/RTP source\",\"status\":\"up\",\"image_src\":\"<div><img src =\'./icon.png\'/></div>\",\"description\":\"\",\"url\":\"\",\"notes\":\"\",\"last_changed\":\"Sun, 10 Oct 2021 13:19:51 GMT\",\"z\":3,\"attrs\":{}},{\"type\":\"html.Element\",\"position\":{\"x\":137,\"y\":72},\"size\":{\"width\":100,\"height\":65},\"angle\":0,\"id\":\"d5284d0d-abb3-496d-a446-a15e1a8485ce\",\"label\":\"UDP/RTP source\",\"status\":\"up\",\"image_src\":\"<div><img src =\'./icon.png\'/></div>\",\"description\":\"\",\"url\":\"\",\"notes\":\"\",\"last_changed\":\"Sun, 10 Oct 2021 13:19:51 GMT\",\"z\":4,\"attrs\":{}}]}');
+INSERT INTO `groups` (`group_id`, `email`, `graph`) VALUES
+('Group 1', 'admin@admin.com', '{\"cells\":[{\"type\":\"html.Element\",\"position\":{\"x\":177,\"y\":168},\"size\":{\"width\":130,\"height\":75},\"angle\":0,\"id\":\"3d14c0f8-d82a-4a7e-8b23-cc446c28d347\",\"label\":\"My elem\",\"status\":\"down\",\"image_src\":\"<div><img src =\'./icon.png\'/></div>\",\"description\":\"my description\",\"url\":\"myurl\",\"notes\":\"new notes\",\"last_changed\":\"Sat, 16 Oct 2021 17:46:56 GMT\",\"z\":1,\"attrs\":{}},{\"type\":\"html.Element\",\"position\":{\"x\":676,\"y\":65},\"size\":{\"width\":130,\"height\":75},\"angle\":0,\"id\":\"dfcea2bb-e46f-4302-97da-b84842c78985\",\"label\":\"my elem 2\",\"status\":\"up\",\"image_src\":\"<div><img src =\'./icon.png\'/></div>\",\"description\":\"my description 2\",\"url\":\"myurl 2\",\"notes\":\"new notes\",\"last_changed\":\"Sat, 16 Oct 2021 17:47:42 GMT\",\"z\":2,\"attrs\":{}},{\"type\":\"standard.Link\",\"source\":{\"id\":\"3d14c0f8-d82a-4a7e-8b23-cc446c28d347\"},\"target\":{\"id\":\"dfcea2bb-e46f-4302-97da-b84842c78985\"},\"id\":\"122494be-3462-422a-9413-b11562f85e9b\",\"connector\":{\"name\":\"smooth\"},\"z\":3,\"vertices\":[{\"x\":491.5,\"y\":154}],\"attrs\":{\"line\":{\"stroke\":\"#222222\",\"strokeWidth\":3}}}]}'),
+('test', 'yasir2@gmail.com', '{\"cells\":[{\"type\":\"html.Element\",\"position\":{\"x\":135,\"y\":129},\"size\":{\"width\":130,\"height\":75},\"angle\":0,\"id\":\"b7d607fa-6891-48d6-b05d-57350118acdb\",\"label\":\"Label\",\"status\":\"up\",\"image_src\":\"<div><img src =\'./icon.png\'/></div>\",\"last_changed\":\"Sun, 17 Oct 2021 16:45:44 GMT\",\"color\":\"#00ffbf\",\"z\":1,\"attrs\":{}},{\"type\":\"html.Element\",\"position\":{\"x\":593,\"y\":119},\"size\":{\"width\":130,\"height\":75},\"angle\":0,\"id\":\"ae2a4cb0-c594-42f0-8de8-fb9a6af17510\",\"label\":\"Label\",\"status\":\"up\",\"image_src\":\"<div><img src =\'./icon.png\'/></div>\",\"last_changed\":\"Sun, 17 Oct 2021 16:45:50 GMT\",\"color\":\"#ff0000\",\"z\":2,\"attrs\":{}},{\"type\":\"html.Element\",\"position\":{\"x\":342,\"y\":287},\"size\":{\"width\":130,\"height\":75},\"angle\":0,\"id\":\"fcd6b0a9-54b0-4d92-8f06-b2e67dfb7da3\",\"label\":\"Label\",\"status\":\"up\",\"image_src\":\"<div><img src =\'./icon.png\'/></div>\",\"last_changed\":\"Sun, 17 Oct 2021 16:46:01 GMT\",\"color\":\"#000000\",\"z\":3,\"attrs\":{}},{\"type\":\"html.Element\",\"position\":{\"x\":351,\"y\":121},\"size\":{\"width\":130,\"height\":75},\"angle\":0,\"id\":\"7b76f5de-87ff-47f2-8858-3bcb761469fa\",\"label\":\"Label\",\"status\":\"down\",\"image_src\":\"<div><img src =\'./icon.png\'/></div>\",\"description\":\"\",\"url\":\"\",\"notes\":\"\",\"last_changed\":\"Sun, 17 Oct 2021 19:30:39 GMT\",\"color\":\"#dc3545\",\"z\":4,\"attrs\":{}},{\"type\":\"standard.Link\",\"source\":{\"id\":\"fcd6b0a9-54b0-4d92-8f06-b2e67dfb7da3\"},\"target\":{\"id\":\"ae2a4cb0-c594-42f0-8de8-fb9a6af17510\"},\"id\":\"ccdea01a-2d66-4b29-ab6d-309a6856de1b\",\"connector\":{\"name\":\"smooth\"},\"z\":5,\"vertices\":[{\"x\":532.5,\"y\":240.5}],\"attrs\":{\"line\":{\"stroke\":\"#222222\",\"strokeWidth\":3}}},{\"type\":\"standard.Link\",\"source\":{\"id\":\"b7d607fa-6891-48d6-b05d-57350118acdb\"},\"target\":{\"id\":\"fcd6b0a9-54b0-4d92-8f06-b2e67dfb7da3\"},\"id\":\"f5e83c90-6e80-4275-9eb7-c258b3e12605\",\"connector\":{\"name\":\"smooth\"},\"z\":6,\"vertices\":[{\"x\":303.5,\"y\":245.5}],\"attrs\":{\"line\":{\"stroke\":\"#222222\",\"strokeWidth\":3}}},{\"type\":\"standard.Link\",\"source\":{\"id\":\"7b76f5de-87ff-47f2-8858-3bcb761469fa\"},\"target\":{\"id\":\"ae2a4cb0-c594-42f0-8de8-fb9a6af17510\"},\"id\":\"b27bb492-734d-47a8-89bd-a21213f90b92\",\"connector\":{\"name\":\"smooth\"},\"z\":7,\"vertices\":[{\"x\":537,\"y\":157.5}],\"attrs\":{\"line\":{\"stroke\":\"#222222\",\"strokeWidth\":3}}},{\"type\":\"standard.Link\",\"source\":{\"id\":\"b7d607fa-6891-48d6-b05d-57350118acdb\"},\"target\":{\"id\":\"7b76f5de-87ff-47f2-8858-3bcb761469fa\"},\"id\":\"f63cbc04-f421-4724-a383-a48a50442f9d\",\"connector\":{\"name\":\"smooth\"},\"z\":8,\"vertices\":[{\"x\":308,\"y\":162.5}],\"attrs\":{\"line\":{\"stroke\":\"#222222\",\"strokeWidth\":3}}},{\"type\":\"html.Element\",\"position\":{\"x\":621,\"y\":280},\"size\":{\"width\":130,\"height\":75},\"angle\":0,\"id\":\"ab760dea-70fe-49ae-a007-1a33830d130f\",\"label\":\"Label\",\"status\":\"up\",\"image_src\":\"<div><img src =\'./icon.png\'/></div>\",\"last_changed\":\"Sun, 17 Oct 2021 19:31:04 GMT\",\"color\":\"#fff700\",\"z\":9,\"attrs\":{}},{\"type\":\"standard.Link\",\"source\":{\"id\":\"fcd6b0a9-54b0-4d92-8f06-b2e67dfb7da3\"},\"target\":{\"id\":\"ab760dea-70fe-49ae-a007-1a33830d130f\"},\"id\":\"7c48f9e7-dbf6-4f4f-b3f5-e88ecb4fc755\",\"connector\":{\"name\":\"smooth\"},\"z\":10,\"vertices\":[{\"x\":546.5,\"y\":321}],\"attrs\":{\"line\":{\"stroke\":\"#222222\",\"strokeWidth\":3}}}]}');
 
 -- --------------------------------------------------------
 
