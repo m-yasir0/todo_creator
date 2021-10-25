@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "workspace";
+$dbname = "nick_work_flow";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
