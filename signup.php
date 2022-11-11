@@ -1,28 +1,29 @@
 <?php
 require_once('./conn.php');
-$GLOBALS['err'] = $_GET && $_GET['error'] ? $_GET['error'] : null;
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($_POST['uname']) && !empty($_POST['password'])) {
-        $this_pass = $_POST['password'];
-        $uname = $_POST['uname'];
-        $sql =  "SELECT * FROM users WHERE uname= '" . $uname . "'";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            if (!empty($row) && password_verify($this_pass, $row['password'])) {
-                session_start();
-                $_SESSION['email'] = $row['email'];
-                $_SESSION['uname'] = $row['uname'];
-                header('Location:' . './index.php');
-                die();
-            } else {
-                $err = "Username or password don't match";
-            }
+function createNewUser($name, $email, $password, $conn)
+{
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    $sql = "INSERT INTO users (email, password, uname) VALUES ('$email', '$password', '$name')";
+    if ($conn->query($sql)) {
+        header('Location:' . './confirmation.html');
+    } else if ($conn->error) {
+        if (!strpos($conn->error, "Duplicate")) {
+            return "User already exists.";
         } else {
-            $err = "Username or password don't match";
+            return "Unexpected error while creating user.";
+        }
+    }
+}
+
+if (isset($_POST) && $_SERVER['REQUEST_METHOD'] == "POST") {
+    if (!empty($_POST['uname']) && !empty($_POST['password']) && !empty($_POST['email'])) {
+        if ($_POST['password'] != $_POST['re_password']) {
+            $msg = 'Password donot match';
+        } else {
+            $msg = createNewUser($_POST['uname'], $_POST['email'], $_POST['password'], $conn);
         }
     } else {
-        $err = 'Username and password required.';
+        $msg = 'Some fields are missing !';
     }
 }
 ?>
@@ -63,27 +64,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-wrapper">
                 <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
                     <?php
-                    if (isset($err)) {
+                    if (isset($msg)) {
                     ?>
                         <div class="alert alert-danger" role="alert">
-                            <?php echo $err ?>
+                            <?php echo $msg ?>
                         </div>
                     <?php
                     }
                     ?>
                     <div class="form-group text-center">
                         <label for="" class="form-label">username</label>
-                        <input name="uname" type="text" class="form-control form--control">
+                        <input type="text" name="uname" class="form-control form--control">
                     </div>
                     <div class="form-group text-center">
                         <label for="" class="form-label">password</label>
-                        <input name="password" type="password" class="form-control form--control">
+                        <input type="password" name="password" class="form-control form--control">
+                    </div>
+                    <div class="form-group text-center">
+                        <label for="" class="form-label">re-entered password</label>
+                        <input type="password" name="re_password" class="form-control form--control">
+                    </div>
+                    <div class="form-group text-center">
+                        <label for="" class="form-label">E-mail</label>
+                        <input type="email" name="email" class="form-control form--control">
                     </div>
                     <div class="button-wrapper">
-                        <a href="./signup.php" class="btn cmn--btn">sign-up</a>
-                    </div>
-                    <div class="button-wrapper mt-4">
-                        <button type="submit" class="btn cmn--btn">login</button>
+                        <button type="submit" class="btn cmn--btn">sign-up</button>
                     </div>
                 </form>
             </div>
